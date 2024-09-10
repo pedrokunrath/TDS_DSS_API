@@ -12,7 +12,3 @@ app.get('/', (req, res) => {
         res.status(500).send(erro.message);
     }
 });
-
-app.post('/cadastar usuario', (req, res) => {
-    const { nome, email, senha } = req.body;
-});
