@@ -185,7 +185,7 @@
     "start": "nodeman node index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Pedro helio ",
   "license": "ISC",
-  "description": ""
+  "description": "criaçao de uma pai de usuarios usando banco de dados "
 }
