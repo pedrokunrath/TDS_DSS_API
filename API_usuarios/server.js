@@ -2,11 +2,11 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const sqlite3 = require('sqlite3').verbose();
-import Handlebars from "handlebars";
+
 
 const app = express();
 const db = new sqlite3.Database('./database.db');
-const template = Handlebars.compile("Name: {{name}}");
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'client')));
@@ -27,10 +27,11 @@ app.get('/', (req, res) => {
 });
 
 app.post('/', (req, res) => {
-    const { nome, email, senha } = req.body;
-
-    const query = `INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)`;
-    db.run(query, [nome, email, senha], function (err) {
+  
+    const { nome, email, senha } = req.body
+    //Arrumar o req body ta vindo undefined
+    const query = `INSERT INTO usuarios VALUES ("${nome}", "${email}", "${senha}")`;
+    db.run(query, (err) => {{
         if (err) {
             console.error('Erro ao cadastrar usuário:', err.message);
             return res.status(500).send('Erro no servidor.');
@@ -38,7 +39,7 @@ app.post('/', (req, res) => {
         console.log(`Usuário cadastrado com sucesso. ID: ${this.lastID}`);
 
         res.redirect('/sucesso');
-    });
+    }});
 });
 
 app.get('/sucesso', (req, res) => {
