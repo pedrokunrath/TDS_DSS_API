@@ -67,6 +67,7 @@
     "glob": "^7.2.3",
     "gopd": "^1.0.1",
     "graceful-fs": "^4.2.11",
+    "handlebars": "^4.7.8",
     "has-property-descriptors": "^1.0.2",
     "has-proto": "^1.0.3",
     "has-symbols": "^1.0.3",
@@ -117,6 +118,7 @@
     "node-abi": "^3.67.0",
     "node-addon-api": "^7.1.1",
     "node-gyp": "^8.4.1",
+    "nodeman": "^1.1.2",
     "nopt": "^5.0.0",
     "npmlog": "^6.0.2",
     "object-inspect": "^1.13.2",
@@ -180,9 +182,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node-gyp rebuild",
-    "prepublishOnly": "npm run build",
-    "start": "nodeman node index.js"
+    "start": "nodeman node server.js"
   },
   "keywords": [],
   "author": "Pedro helio ",

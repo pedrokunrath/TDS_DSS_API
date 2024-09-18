@@ -2,13 +2,14 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const sqlite3 = require('sqlite3').verbose();
+import Handlebars from "handlebars";
 
 const app = express();
 const db = new sqlite3.Database('./database.db');
+const template = Handlebars.compile("Name: {{name}}");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'client')));
-
 
 db.serialize(() => {
     db.run(`
@@ -21,12 +22,14 @@ db.serialize(() => {
     `);
 });
 
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'index.html'));
+});
 
-app.post('/cadastro', (req, res) => {
+app.post('/', (req, res) => {
     const { nome, email, senha } = req.body;
 
-   
-    const db = `INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)`;
+    const query = `INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)`;
     db.run(query, [nome, email, senha], function (err) {
         if (err) {
             console.error('Erro ao cadastrar usuário:', err.message);
@@ -34,16 +37,13 @@ app.post('/cadastro', (req, res) => {
         }
         console.log(`Usuário cadastrado com sucesso. ID: ${this.lastID}`);
 
-        
         res.redirect('/sucesso');
     });
 });
 
-
 app.get('/sucesso', (req, res) => {
     res.sendFile(path.join(__dirname, 'client', 'sucesso.html'));
 });
-
 
 app.listen(3000, () => {
     console.log('Servidor rodando na porta 3000');
