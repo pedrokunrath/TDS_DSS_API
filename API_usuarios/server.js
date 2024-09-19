@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const sqlite3 = require('sqlite3').verbose();
+const sqlite3 = require('sqlite3');
 
 
 const app = express();
@@ -10,6 +10,10 @@ const db = new sqlite3.Database('./database.db');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'client')));
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'index.html'));
+});
 
 db.serialize(() => {
     db.run(`
@@ -22,9 +26,7 @@ db.serialize(() => {
     `);
 });
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client', 'index.html'));
-});
+
 
 app.post('/', (req, res) => {
   
