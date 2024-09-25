@@ -4,3 +4,4 @@ package-lock.jason
 build-lock.jason
 build
 .gitignore
+database.db
