@@ -1,127 +1,63 @@
-// /controller/school.controller.js
-
-let alunos = [
-    { id: 1, nome: 'João', idade: 15, turma: '1A', email: 'ffnrueu@fnren.com' }
-];
-
-let professores = [
-    { id: 1, nome: 'Maria', idade: 30, turma: '1A', email: 'maria@example.com' }
-];
-
-let turmas = [
-    {
-        nome: '1A',
-        alunos: alunos,
-        professores: professores
-    }
-];
+const alunos = require('../models/alunos.model');
+const professores = require('../models/professor.model');
+const turmas = require('../models/turma.model');
 
 // Funções para Alunos
-function getAllAlunos() {
-    return alunos;
-}
+exports.getAllAlunos = () => alunos;
 
-function getAlunoById(id) {
-    return alunos.find(aluno => aluno.id === parseInt(id));
-}
+exports.getAlunoById = (id) => alunos.find(aluno => aluno.id === parseInt(id));
 
-function createAluno(aluno) {
-    aluno.id = alunos.length + 1; // Define o ID automaticamente
+exports.createAluno = (aluno) => {
+    aluno.id = alunos.length + 1;
     alunos.push(aluno);
     return aluno;
-}
+};
 
-function updateAluno(id, alunoAtualizado) {
-    let aluno = alunos.find(aluno => aluno.id === parseInt(id));
-    if (aluno) {
-        Object.assign(aluno, alunoAtualizado); // Atualiza o aluno com os novos dados
-    }
+exports.updateAluno = (id, alunoAtualizado) => {
+    let aluno = alunos.find(a => a.id === parseInt(id));
+    if (aluno) Object.assign(aluno, alunoAtualizado);
     return aluno;
-}
+};
 
-function deleteAluno(id) {
+exports.deleteAluno = (id) => {
     const index = alunos.findIndex(aluno => aluno.id === parseInt(id));
-    if (index > -1) {
-        return alunos.splice(index, 1)[0]; // Remove e retorna o aluno deletado
-    }
+    if (index > -1) return alunos.splice(index, 1)[0];
     return null;
-}
+};
 
-// Funções para Professores
-function getAllProfessores() {
-    return professores;
-}
-
-function getProfessorById(id) {
-    return professores.find(professor => professor.id === parseInt(id));
-}
-
-function createProfessor(professor) {
+// Funções para Professores (seguem o mesmo padrão que para Alunos)
+exports.getAllProfessores = () => professores;
+exports.getProfessorById = (id) => professores.find(prof => prof.id === parseInt(id));
+exports.createProfessor = (professor) => {
     professor.id = professores.length + 1;
     professores.push(professor);
     return professor;
-}
-
-function updateProfessor(id, professorAtualizado) {
-    let professor = professores.find(professor => professor.id === parseInt(id));
-    if (professor) {
-        Object.assign(professor, professorAtualizado);
-    }
+};
+exports.updateProfessor = (id, professorAtualizado) => {
+    let professor = professores.find(p => p.id === parseInt(id));
+    if (professor) Object.assign(professor, professorAtualizado);
     return professor;
-}
-
-function deleteProfessor(id) {
-    const index = professores.findIndex(professor => professor.id === parseInt(id));
-    if (index > -1) {
-        return professores.splice(index, 1)[0];
-    }
+};
+exports.deleteProfessor = (id) => {
+    const index = professores.findIndex(prof => prof.id === parseInt(id));
+    if (index > -1) return professores.splice(index, 1)[0];
     return null;
-}
+};
 
-// Funções para Turmas
-function getAllTurmas() {
-    return turmas;
-}
-
-function getTurmaById(id) {
-    return turmas.find(turma => turma.nome === id);
-}
-
-function createTurma(turma) {
+// Funções para Turmas (seguem o mesmo padrão)
+exports.getAllTurmas = () => turmas;
+exports.getTurmaById = (nome) => turmas.find(turma => turma.nome === nome);
+exports.createTurma = (turma) => {
     turmas.push(turma);
     return turma;
-}
-
-function updateTurma(id, turmaAtualizada) {
-    let turma = turmas.find(turma => turma.nome === id);
-    if (turma) {
-        Object.assign(turma, turmaAtualizada);
-    }
+};
+exports.updateTurma = (nome, turmaAtualizada) => {
+    let turma = turmas.find(t => t.nome === nome);
+    if (turma) Object.assign(turma, turmaAtualizada);
     return turma;
-}
-
-function deleteTurma(id) {
-    const index = turmas.findIndex(turma => turma.nome === id);
-    if (index > -1) {
-        return turmas.splice(index, 1)[0];
-    }
+};
+exports.deleteTurma = (nome) => {
+    const index = turmas.findIndex(turma => turma.nome === nome);
+    if (index > -1) return turmas.splice(index, 1)[0];
     return null;
-}
-
-module.exports = {
-    getAllAlunos,
-    getAlunoById,
-    createAluno,
-    updateAluno,
-    deleteAluno,
-    getAllProfessores,
-    getProfessorById,
-    createProfessor,
-    updateProfessor,
-    deleteProfessor,
-    getAllTurmas,
-    getTurmaById,
-    createTurma,
-    updateTurma,
-    deleteTurma
 };
