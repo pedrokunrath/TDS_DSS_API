@@ -11,3 +11,4 @@ app.get('/', (req, res) => {
         res.status(500).json({message: erro});
     }
 });
+    
