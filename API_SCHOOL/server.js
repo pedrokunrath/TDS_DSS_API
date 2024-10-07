@@ -1,16 +1,13 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const schoolRouter = require('./routes/school.router');
+const express = require("express");
+const bodyParser = require("body-parser");
+const indexRoutes = require("./routes/index.routes");
 
 const app = express();
-const port = 8080;
 
-// Middleware para trabalhar com JSON
 app.use(bodyParser.json());
 
-// Rotas da API
-app.use('/api', schoolRouter);
+app.use(indexRoutes);
 
-app.listen(port, () => {
-    console.log(`Servidor rodando em http://localhost:${port}`);
+app.listen(8080, () => {
+    console.log('O servidor está rodando na porta 8080!');
 });
