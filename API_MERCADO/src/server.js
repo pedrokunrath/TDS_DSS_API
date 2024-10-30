@@ -1,8 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const indexRoutes = require("./routes/index.routes");
+const indexRoutes = require("../routes/index.routes");
 
-const conn = require("./mysql-connection");
+const conn = require("./mysql-conetion");
 
 const app = express();
 

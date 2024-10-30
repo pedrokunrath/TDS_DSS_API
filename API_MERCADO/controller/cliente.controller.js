@@ -1,77 +1,61 @@
-const conn = require("../mysql-connection");
+const conn = require('../src/mysql-conetion');
 
-module.exports = ({
+module.exports = {
     cadastro: (req, res) => {
         const { nome, telefone } = req.body;
+        let comando = telefone ?
+            `INSERT INTO CLIENTE(nome, telefone) VALUES('${nome}', '${telefone}')` :
+            `INSERT INTO CLIENTE(nome, telefone) VALUES('${nome}', null)`;
 
-        var comando = ``;
-
-        if (!telefone) {
-            comando = `INSERT INTO CLIENTE(nome, 
-            telefone) VALUES('${nome}',null)`
-        } else {
-            comando = `INSERT INTO CLIENTE(nome, 
-            telefone) VALUES('${nome}','${telefone}')`
-        }
-
-        conn.raw(comando)
-            .then((data) => {
-                res.status(200).send({ msg: "Cliente cadastrado com sucesso!" });
-            })
-            .catch((error) => {
-                res.status(500).send("Erro ao cadastrar um cliente!");
-            });
-
+        conn.query(comando, (err, results) => {
+            if (err) {
+                return res.status(500).send('Erro ao cadastrar um cliente!');
+            }
+            res.status(200).send({ msg: 'Cliente cadastrado com sucesso!' });
+        });
     },
     consultar: (req, res) => {
-        conn.raw("SELECT * FROM CLIENTE").then((data) => {
-            res.status(200).send(data[0]);
-        }).catch((erro) => {
-            console.log(erro);
-            res.status(500).send("Erro ao consultar os clientes!");
+        conn.query('SELECT * FROM CLIENTE', (err, results) => {
+            if (err) {
+                return res.status(500).send('Erro ao consultar os clientes!');
+            }
+            res.status(200).send(results);
         });
     },
     atualizar: (req, res) => {
         const { id, nome, telefone, status } = req.body;
+        const comando = `UPDATE CLIENTE SET nome='${nome}', telefone='${telefone}', status=${status} WHERE id=${id}`;
 
-        conn.raw(`UPDATE CLIENTE SET nome='${nome}', 
-            telefone='${telefone}', 
-            status=${status} WHERE id = ${id}`)
-            .then((data) => {
-                console.log(data);
-                res.status(200).send({ msg: "Cliente atualizado com sucesso!" })
-            }).catch((error) => {
-                console.log(error);
-                res.status(500).send({ msg: "Erro ao atualizar o cliente!" });
-            });
+        conn.query(comando, (err, results) => {
+            if (err) {
+                return res.status(500).send('Erro ao atualizar o cliente!');
+            }
+            res.status(200).send({ msg: 'Cliente atualizado com sucesso!' });
+        });
     },
     deletar: (req, res) => {
         const { id } = req.params;
+        const comando = `DELETE FROM CLIENTE WHERE id=${id}`;
 
-        conn.raw(`DELETE FROM CLIENTE WHERE ID = ${id}`).then((data) => {
-            console.log(data[0].affectedRows);
-
-            if (data[0].affectedRows == 0) {
-                return res.status(404).send({ msg: "Nenhum cliente encontrado com esse código!" });
-            } else {
-                return res.status(200).send({ msg: "Cliente deletado com sucesso!" });
+        conn.query(comando, (err, results) => {
+            if (err) {
+                return res.status(500).send('Erro ao deletar o cliente!');
             }
-
-        }).catch((error) => {
-            console.log(error);
-            return res.status(500).send({ msg: "Erro ao deletar o cliente!" });
+            if (results.affectedRows === 0) {
+                return res.status(404).send({ msg: 'Nenhum cliente encontrado com esse código!' });
+            }
+            res.status(200).send({ msg: 'Cliente deletado com sucesso!' });
         });
     },
     buscaPorId: (req, res) => {
         const { id } = req.params;
+        const comando = `SELECT * FROM CLIENTE WHERE id=${id}`;
 
-        conn.raw(`SELECT * FROM CLIENTE WHERE id = ${id}`).then((data) => {
-            console.log(data);
-            res.status(200).send(data[0]);
-        }).catch((error) => {
-            console.log(error);
-            res.status(500).send("Erro ao consultar o cliente!");
+        conn.query(comando, (err, results) => {
+            if (err) {
+                return res.status(500).send('Erro ao consultar o cliente!');
+            }
+            res.status(200).send(results);
         });
-        
     }
-})
+};
