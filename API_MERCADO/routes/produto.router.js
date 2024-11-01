@@ -1,11 +1,8 @@
-const routes = require("express").Router();
-const produtoController = require("../controller/produto.controller");
-
-//CRUD
-routes.post("/", produtoController.cadastro);
-routes.get("/", produtoController.consultar);
-routes.get("/:id", produtoController.buscaPorId);
-routes.put("/:id([0-9]+)", produtoController.atualizar);
-routes.delete("/:id([0-9]+)", produtoController.deletar);
-
-module.exports = routes;
+const router = require("express").Router();
+const produtoController = require('../controller/produto.controller');
+router.post('/produtos', produtoController.cadastro);
+router.get('/produtos', produtoController.consultar);
+router.get('/produtos/:id', produtoController.buscaPorId);
+router.put('/produtos/:id', produtoController.atualizar);
+router.delete('/produtos/:id', produtoController.deletar);
+module.exports = router;
