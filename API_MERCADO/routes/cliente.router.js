@@ -1,11 +1,9 @@
-const routes = require("express").Router();
+const router = require("express").Router();
 const clienteController = require("../controller/cliente.controller");
+router.post('/clientes', clienteController.cadastro);
+router.get('/clientes', clienteController.consultar);
+router.get('/clientes/:id', clienteController.buscaPorId);
+router.put('/clientes/:id', clienteController.atualizar);
+router.delete('/clientes/:id', clienteController.deletar);
+module.exports = router;
 
-// CRUD
-routes.post("/", clienteController.cadastro);
-routes.get("/", clienteController.consultar);
-routes.get("/:id([0-9]+)", clienteController.buscaPorId);
-routes.put("/", clienteController.atualizar);
-routes.delete("/:id([0-9]+)", clienteController.deletar);
-
-module.exports = routes;
