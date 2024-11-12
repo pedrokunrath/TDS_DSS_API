@@ -1,0 +1,14 @@
+//json pra fazer a tranzaction
+
+
+{
+  "id_qvaifazeropix": 2,
+  "id_qvaireceberopix": 3,
+  "valor": 100.50
+}
+
+{
+  "nome": "João",
+  "telefone": "11999999999"
+}
+

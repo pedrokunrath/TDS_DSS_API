@@ -10,7 +10,7 @@ module.exports = {
 
         try {
             const [result] = await conn.raw(
-                `INSERT INTO mercado.cliente (nome, telefone) VALUES (?, ?)`,
+                `INSERT INTO cliente (nome, telefone) VALUES (?, ?)`,
                 [nome, telefone]
             );
             return res.status(201).send({ msg: "Cliente cadastrado com sucesso!", clienteId: result.insertId });
@@ -34,7 +34,7 @@ module.exports = {
         const { id } = req.params;
 
         try {
-            const [cliente] = await conn.raw(`SELECT * FROM cliente WHERE id = ?`, [id]);
+            const [cliente] = await conn.raw(`SELECT * FROM mercado.cliente WHERE id = ?`, [id]);
             if (cliente.length === 0) {
                 return res.status(404).send({ msg: "Cliente não encontrado!" });
             }

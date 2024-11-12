@@ -29,6 +29,8 @@ CREATE TABLE mercado.pedido(
 
 INSERT INTO mercado.cliente(nome, telefone)
 VALUES("Guilherme Pires", "46999756350");
+INSERT INTO transactions.users(nome, telefone)
+VALUES("Guilherme Pires", "46999756350");
 
 SELECT * FROM cleintes;
 
