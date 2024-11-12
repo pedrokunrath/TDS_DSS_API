@@ -5,3 +5,6 @@ build-lock.jason
 build
 .gitignore
 database.db
+transaction.sql
+user.sql
+trilha,json
