@@ -10,7 +10,7 @@ function Menu() {
                     <a href="/alunos">Alunos</a>
                 </li>
                 <li>
-                    <a href="/turmas">Turmas</a>
+                    <a href="/turmas">Turmasjnfiuewbifuewiufuiewufbw</a>
                 </li>
             </ul>
         </>
